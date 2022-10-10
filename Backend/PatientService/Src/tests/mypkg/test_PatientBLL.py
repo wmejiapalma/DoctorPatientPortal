@@ -1,4 +1,7 @@
+from mypkg.PatientBLL import say_hello_to
 #to run tests use the command: python -m pytest -s
+def test_greeting():
+    print(say_hello_to("hello"))
 def test_health(client):
     #gets an endpoint
     response = client.get('/health')
