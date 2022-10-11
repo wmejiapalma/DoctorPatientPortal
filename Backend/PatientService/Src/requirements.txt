@@ -1,4 +1,0 @@
-Flask==2.2.2
-pytest==7.1.3
-flask-inputs==0.3.0
-jsonschema==4.16.0
