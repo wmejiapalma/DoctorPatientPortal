@@ -1,4 +1,4 @@
-from dataclasses import Field, dataclass
+from dataclasses import Field, dataclass, field
 from datetime import date
 from xml.dom.minidom import Document
 from bson.objectid import ObjectId
@@ -10,5 +10,4 @@ class Patient(dict):
     DOB: date
     _id: ObjectId
     insurance_id: int
-    def encode_patient(self):
-        pass
+    password: str = field(init=True,repr=False)

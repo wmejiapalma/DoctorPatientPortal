@@ -29,6 +29,13 @@ def get_patient(id):
 def get_all_patients():
     return list(mongo_collection.find())
 def find_patient_from_info(patient):
+    """
+    Returns a patient given a patient with some information
+    Fields:
+    - firstname
+    - lastname
+    - DOB
+    """
     return list(mongo_collection.find({"firstname":patient.firstname,"lastname":patient.lastname,"DOB":patient.DOB}))
 if __name__ == "__main__":
     print("this is a module")
