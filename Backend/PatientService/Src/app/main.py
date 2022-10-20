@@ -1,3 +1,6 @@
+from distutils.log import debug
+from urllib.request import Request,urlopen
+import requests as req
 from flask import Flask, jsonify, request, json, Response, session
 from flask_session import Session
 from flask_bcrypt import Bcrypt
@@ -26,9 +29,12 @@ def json() -> str:
     app.logger.info("Health Check")
     return jsonify(STATUS="up")
 
-
+#Only admin access should be able to use this
 @app.route("/patients", methods=['GET'])
 def get_patients() -> Response:
+    '''
+    RETURNS ALL PATIENTS AND INFORMATION
+    '''
     try:
         return Response(PatientBLL.get_all_patients(), mimetype=RETURNJSON)
     except Exception as e:
@@ -60,11 +66,30 @@ def delete_patient(id) -> str:
 
 #END OF CRUD
 #START OF PATIENT SPECIFIC
-@app.route("/patients/<id>/primarydoctor", methods=['GET'])
-def get_primary_doctor(id) -> Response:
-    print(id)
+@app.route("/patients/primarydoctor", methods=['GET'])
+def get_primary_doctor() -> Response:
+    '''
+    Returns the primary doctor of the patient \n
+    uses the session to get the patient id
+    '''
     #throw not yet implemented
     return Response("Not Yet Implemented", mimetype=RETURNJSON,status=404)
+
+@app.route("/patients/appointments", methods=['GET'])
+def get_patient_appointments():
+    '''
+    Returns all appointments for the patient \n
+    uses the session to get the patient id
+    '''
+    #throw not yet implemented
+    try:
+        pid = session.get("user_id")
+        appointment_url = os.environ.get("APPOINTMENT_URL")    
+        url = f"{appointment_url}/appointments/{pid}"
+        appointments = req.request(method="GET",url=url)
+        return jsonify(appointments.json())
+    except Exception as e:
+        return Response(f'An error has occured \n {e} \n {session.get("user_id")}', 500)
 
 @app.route("/login",methods=["POST"])
 def login() -> Response:

@@ -9,8 +9,12 @@ mongo_db = mongo_connection.appointments
 mongo_collection = mongo_db.appointments
 print(f"Successfully connected to Mongo Database: {os.environ.get('MONGO_URL')}")
 
-def insert_patient(appointment):
-    mongo_collection.insert_one(appointment)
+def insert_appointment(appointment):
+    mongo_collection.insert_one(appointment.to_json())
 
+def get_all_appointments():
+    return list(mongo_collection.find())
+def get_appointments_by_pid(object_id):
+    return list(mongo_collection.find({"patient_id":object_id}))
 if __name__ == "__main__":
     print("this is a module")

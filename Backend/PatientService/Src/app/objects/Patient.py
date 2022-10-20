@@ -11,3 +11,4 @@ class Patient(dict):
     _id: ObjectId
     insurance_id: int
     password: str = field(init=True,repr=False)
+    admin: bool = False
