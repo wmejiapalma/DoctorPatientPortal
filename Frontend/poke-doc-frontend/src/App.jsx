@@ -5,10 +5,9 @@ import Toolbar from './components/Navbar/Toolbar'
 
 
 function App() {
-  const [count, setCount] = useState(0)
-
+  
   return (
-    <Toolbar  links={["Hello","World","Name"]}/>
+    <Toolbar  links={["Home","Sign up","Log in"]}/>
   )
 }
 

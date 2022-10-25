@@ -4,6 +4,7 @@ import requests as req
 from flask import Flask, jsonify, request, json, Response, session
 from flask_session import Session
 from flask_bcrypt import Bcrypt
+from flask_cors import CORS, cross_origin
 from json import loads
 import sys,os, logging
 sys.path.append(os.path.join(os.path.dirname(__file__), '..')) 
@@ -15,6 +16,7 @@ import mypkg.PatientBLL as PatientBLL
 app= Flask(__name__)
 app.config.from_object('app.Config.ApplicationConfig')
 server_session = Session(app)
+cors = CORS(app, supports_credentials=True, resources={r"/*": {"origins": "*"}})
 bcrypt = Bcrypt(app)
 
 RETURNJSON = "application/json"
@@ -96,11 +98,13 @@ def login() -> Response:
     try:
         patient = PatientBLL.find_first_patient(request.json)
         patient = PatientBLL.json_to_patient(patient)
-        
+        if(patient is None):
+            return Response("Could not find patient", 404)
         if patient == None:
             return Response("Unauthorized",status=401)
         if bcrypt.check_password_hash(patient.password,request.json["password"]):
             session["user_id"] = patient._id
+            print(session.get("user_id"))
             return Response("Login Successful",status=200)
         else:
             return Response("Unauthorized",status=401)

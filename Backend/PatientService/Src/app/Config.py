@@ -10,3 +10,4 @@ class ApplicationConfig():
     SESSION_PERMANENT = False
     SESSION_USE_SIGNER = True
     SESSION_REDIS = redis.from_url(os.getenv('REDIS_URL'))
+    CORS_HEADERS = 'Content-Type'
