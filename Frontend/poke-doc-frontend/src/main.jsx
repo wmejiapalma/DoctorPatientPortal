@@ -10,36 +10,18 @@ import {
     createBrowserRouter,
     RouterProvider,
     Route,
+    Routes,
+    Router,
+    BrowserRouter
   } from "react-router-dom";
 
 
-
-const router = createBrowserRouter([
-    {
-        path: "/home",
-        element: <Home />,
-    },
-    {
-        path: "/",
-        element: <Home />,
-    },
-    {
-        path: "/sign_up",
-        element: <SignUp />,
-    },
-    {
-        path: "/log_in",
-        element: <Login/>,
-    },
-    {
-        path: "/userhome",
-        element: <UserHome/>,
-    }
-]);
-    
-
 ReactDOM.createRoot(document.getElementById('root')).render(
 <React.StrictMode>
-    <RouterProvider router={router}/>
+    <BrowserRouter>
+        <App/>
+    </BrowserRouter>
 </React.StrictMode>
 )
+let body = document.getElementsByTagName('body')
+body.item(0).className = "bg-gradient-to-b from-primary to-violet-500"

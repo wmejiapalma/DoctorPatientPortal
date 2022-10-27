@@ -12,3 +12,12 @@ class Patient(dict):
     insurance_id: int
     password: str = field(init=True,repr=False)
     admin: bool = False
+    def to_json(self):
+        return {
+            "_id": self._id.__str__(),
+            "firstname": self.firstname,
+            "lastname": self.lastname,
+            "DOB": self.DOB,
+            "insurance_id": self.insurance_id,
+            "admin": self.admin
+        }

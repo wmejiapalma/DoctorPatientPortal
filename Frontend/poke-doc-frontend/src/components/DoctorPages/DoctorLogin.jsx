@@ -1,61 +1,61 @@
 import React from 'react'
 import CustomNav from '../Navbar/CustomNav'
 import { useState } from 'react'
-import {login} from '../../contactApi'
 import { Link } from 'react-router-dom'
-const Login = () => {
-  const [person, setPerson] = useState(setUseState)
-  function setUseState(){
-    return {
-     "firstname": "",
-     "lastname": "",
-     "password": "",
-     "DOB": "",
-   }
- }
-  async function logInUser(){
-    try{
-      await login(person)
-      window.location.href = "/userhome"
-    }
-    catch(error){
-      console.log(error)
-      let resCode = ""
-      try {
-        resCode = error.response.status
-      } catch (error) {
-        resCode = 500
-      }
-      if (resCode == 401){
-        alert("Invalid Credentials")
-      }
-      else{
-        alert("this is awkward, something went wrong")
-      }
-    }
-}
-  async function onFormSubmit(){
-    if(person.firstname == "" || person.lastname == "" || person.password == "" || person.DOB == ""){
-      alert("Please fill out all fields")
-      return
-    }
-    logInUser()
-  }
- function setData(e){
-   const {id, value} = e.target
-   setPerson(prevState => ({
-     ...prevState,
-     [id]: value
-   }));
- }
 
+const DoctorLogin = () => {
+    const [person, setPerson] = useState(setUseState)
+    function setUseState(){
+      return {
+       "firstname": "",
+       "lastname": "",
+       "password": "",
+       "DOB": "",
+     }
+   }
+    async function logInUser(){
+      try{
+        await login(person)
+        window.location.href = "/doctorhome"
+      }
+      catch(error){
+        console.log(error)
+        let resCode = ""
+        try {
+          resCode = error.response.status
+        } catch (error) {
+          resCode = 500
+        }
+        if (resCode == 401){
+          alert("Invalid Credentials")
+        }
+        else{
+          alert("this is awkward, something went wrong")
+        }
+      }
+  }
+    async function onFormSubmit(){
+      if(person.firstname == "" || person.lastname == "" || person.password == "" || person.DOB == ""){
+        alert("Please fill out all fields")
+        return
+      }
+      logInUser()
+    }
+   function setData(e){
+     const {id, value} = e.target
+     setPerson(prevState => ({
+       ...prevState,
+       [id]: value
+     }));
+   }
+   
   return (
-    <div>
-        <CustomNav links={["Home","Sign up","Log in"]}/>
-        <div className="flex justify-center items-center my-4 ">
+    <>
+        <CustomNav links={["Home","Appointments","Sign Up","Log in"]}/>
+        <div className="flex justify-center items-center my-4">
         <div id="LoginForm" className='card card-compact w-96 bg-primary shadow-xl my-8 '>
           <div className="card-title justify-center my-3">
-            Patient Login
+            Doctor Login
           </div>
           <div class="card-body justify-center ">
             <label className="flex input-group my-2">
@@ -75,20 +75,21 @@ const Login = () => {
               <input id="password" required type="text" placeholder="gR3AtP4ss01$" className="flex-1 input input-bordered"  onChange={setData} />
             </label>
           <div className="flex justify-center">
-            <div className='mt-2 btn btn-secondary' onClick={onFormSubmit}>Log in</div>
+            <div className='mt-2 btn btn-secondary' onClick={onFormSubmit}>Doctor Log in</div>
           </div>
           </div>
             <div className="DividerAndSignUp">
               <div className='divider'>OR</div>
               <div className='flex justify-center m-3 items-center'>
                 <a className="btn btn-secondary flex-1 mx-5" >Sign up</a>
-                <Link to="/doctor_login" className="btn btn-secondary flex-1 mx-5" >Doctor Login</Link>
+                <Link to="/log_in" className="btn btn-secondary flex-1 mx-5" >Patient Login</Link>
               </div>
             </div>
         </div>
         </div>
-    </div>
+    </>
   )
 }
 
-export default Login
+
+export default DoctorLogin

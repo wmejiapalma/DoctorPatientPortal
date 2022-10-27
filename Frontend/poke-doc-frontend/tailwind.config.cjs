@@ -9,7 +9,7 @@ module.exports = {
   },
   plugins: [require("daisyui")],
   daisyui: {
-    themes: [
+    themes: [//use "night theme",
       {
         mytheme: {
           "primary": "#352C79",

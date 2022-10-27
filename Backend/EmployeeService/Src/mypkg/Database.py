@@ -26,5 +26,14 @@ def get_all_by_pid(pid):
     returns list of employee objects
     '''
     return list(mongo_collection.find({"patient_id":{"patient_id":pid}}))
+def get_by_id(id):
+    '''
+    Takes in an ObjectId
+    Gets employee object by id \n
+    returns single employee object
+    '''
+    return mongo_collection.find_one({"_id":id})
+def get_by_info(person):
+    return list(mongo_collection.find({"firstname":person.firstname,"lastname":person.lastname,"DOB":person.DOB}))
 if __name__ == "__main__":
     print("this is a module")

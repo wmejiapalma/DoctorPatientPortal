@@ -111,6 +111,14 @@ def login() -> Response:
     except Exception as e:
         return Response(f"Error: {e}",status=500)
 
+@app.route("/logout",methods=["GET"])
+def log_out_user() -> Response:
+    try:
+        session.pop("user_id",None)
+        return Response("Logout Successful",status=200)
+    except Exception as e:
+        return Response(f"Error: {e}",status=500)
+
 @app.route("/whoami",methods=["GET"])
 def whoami() -> Response:
     try:
@@ -120,7 +128,7 @@ def whoami() -> Response:
         else:
             patient = PatientBLL.find_patient_by_id(user_id)
             patient = PatientBLL.json_to_patient(patient)
-            return Response(f"hello! {patient.firstname}",status=200)
+            return jsonify(patient.to_json())
     except Exception as e:
         return Response(f"Error: {e}",status=500)
 
