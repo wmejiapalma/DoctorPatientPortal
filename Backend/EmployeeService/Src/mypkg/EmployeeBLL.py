@@ -6,14 +6,19 @@ import mypkg.Database as db
 import app.objects.Employee as Employee
 from bson import ObjectId
 
+#the functions that return objects should not be formatted as a response object
+#the functions that return responses (200,404,500) should return Response Objects
+
 def create_employee(employee):
     '''
         INPUT: JSON object of employee
         Creates employee in database \n
         returns employee object
     '''
+    print(employee)
     new_employee = Employee.Employee(**employee)
-    return db.insert(new_employee)
+    db.insert(new_employee)
+    return new_employee
 
 def get_all_employees():
     '''
@@ -63,8 +68,45 @@ def find_employee_by_info(json):
     '''
     try:
         employee = db.get_by_info(json)
+        print(employee)
         return Employee.Employee(**employee)
     except Exception as e:
+        print(e)
         return None
+def delete_employee_by_id(id):
+    '''
+        INPUT: employee_id \n
+        Deletes employee from database by employee_id \n
+        Returns Response Object
+        200: if employee was deleted
+        404: if employee was not found
+        500: if an error occured
+    '''
+    try:
+        res = db.delete_by_id(id)
+        print(res)
+        if(res > 0):
+            return Response(status=200)
+        return Response(status=404)
+    except Exception as e:
+        return Response(status=500)
+def update_employee_by_id(id,new_employee):
+    '''
+        INPUT: employee_id \n
+        Updates employee from database by employee_id \n
+        Returns Response Object
+        200: if employee was updated
+        404: if employee was not found
+        500: if an error occured
+    '''
+    new_employee = Employee.Employee(**new_employee)
+    try:
+        res = db.update_by_id(id,new_employee)
+        if(res > 0):
+            return Response(status=200)
+        return Response(status= 404)
+    except Exception as e:
+        print(e)
+        return Response(status=500)
 if __name__ == "__main__":
     pass

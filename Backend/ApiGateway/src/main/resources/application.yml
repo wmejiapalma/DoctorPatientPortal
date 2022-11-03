@@ -1,0 +1,27 @@
+server:
+  port: 8888
+
+eureka:
+  client:
+    serviceUrl:
+      #defaultZone: http://localhost:8761/eureka
+      defaultZone: http://eureka:8761/eureka
+
+spring:
+  application:
+    name: ApiGateWay
+  cloud:
+    gateway:
+      routes:
+      #User Service
+      - id: patientservice
+        uri: lb://patientservice
+        predicates:
+        - Path=/patientservice/**
+        - Path=/patients/**
+      - id: employeeservice
+        uri: lb://employeeservice
+        predicates:
+        - Path=/employeeservice/**
+        - Path=/employees/**
+        - Path=/doctor/**

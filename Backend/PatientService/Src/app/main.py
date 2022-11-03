@@ -1,24 +1,32 @@
-from distutils.log import debug
-from urllib.request import Request,urlopen
+
 import requests as req
-from flask import Flask, jsonify, request, json, Response, session
+from flask import Flask, jsonify, request, Response, session
 from flask_session import Session
 from flask_bcrypt import Bcrypt
-from flask_cors import CORS, cross_origin
-from json import loads
-import sys,os, logging
+from flask_cors import CORS
+import py_eureka_client.eureka_client as eureka_client
+import sys,os
 sys.path.append(os.path.join(os.path.dirname(__file__), '..')) 
-from bson import json_util, ObjectId
-from logging.config import fileConfig
-from objects.Patient import Patient
 import mypkg.PatientBLL as PatientBLL
+
+#EUREKA DISCOVERY
+SERVER_PORT = 3000
+eureka_client.init(eureka_server="http://eureka:8761/eureka",
+                   app_name="patientservice",
+                   instance_port=SERVER_PORT)
+
+#Flask app setup
 
 app= Flask(__name__)
 app.config.from_object('app.Config.ApplicationConfig')
+#Getting the redis db for user sessions
 server_session = Session(app)
+#CORS 
+#Once dockerized i will only allow the dockerized content through cors
 cors = CORS(app, supports_credentials=True, resources={r"/*": {"origins": "*"}})
+#User Password Encryption
 bcrypt = Bcrypt(app)
-
+#Helpful ENUM
 RETURNJSON = "application/json"
 
 @app.before_request
@@ -144,4 +152,4 @@ def not_found(error):
 
 if __name__ == "__main__" and __package__ is None:
     print("PatientService is Running")
-    app.run(host='0.0.0.0',debug=True, port='3000')
+    app.run(host='0.0.0.0',debug=True, port=SERVER_PORT)

@@ -34,13 +34,28 @@ o	int patient_id \n
         self.position = kwargs.get("position", None)
         self.DOB = kwargs.get("DOB", None)
         self.patient_id = kwargs.get("patient_id", None)
-    def to_json(self):
-        
+        self.password = kwargs.get("password",None)
+    def to_json_unsafe(self):
+        '''
+            WARNING: This method will return the hashed password of the employee \n
+            Returns a JSON Object of the object
+        '''
         return {
             "_id": self._id.__str__(),
             "firstname": self.firstname,
             "lastname": self.lastname,
             "position": self.position,
             "DOB": self.DOB,
-            "patient_id": self.patient_id
+            "patient_id": self.patient_id,
+            "password": self.password
         }
+    def to_json(self):
+        '''
+            Returns a JSON Object of the object without the password \n
+            Safe for API calls
+        '''
+        output = self.to_json_unsafe()
+        output.pop("password")
+        return output
+    def get_id(self):
+        return self._id.__str__()

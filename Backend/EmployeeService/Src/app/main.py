@@ -1,19 +1,16 @@
-from distutils.log import debug
-from tkinter import E
-from urllib.request import Request,urlopen
-import requests as req
 from flask import Flask, jsonify, request, json, Response, session
 from flask_session import Session
 from flask_bcrypt import Bcrypt
-from flask_cors import CORS, cross_origin
-from json import loads
-import sys,os, logging
-
-from Src.app.objects.Employee import Employee
+from flask_cors import CORS
+from py_eureka_client import eureka_client
+import sys,os
 sys.path.append(os.path.join(os.path.dirname(__file__), '..')) 
-from bson import json_util, ObjectId
-from logging.config import fileConfig
 import mypkg.EmployeeBLL as bll
+
+SERVER_PORT = 3002
+eureka_client.init(eureka_server="http://eureka:8761/eureka",
+                   app_name="employeeservice",
+                   instance_port=SERVER_PORT)
 app= Flask(__name__)
 app.config.from_object('app.Config.ApplicationConfig')
 server_session = Session(app)
@@ -37,8 +34,15 @@ def get_all_employees():
 @app.route('/employees', methods=['POST'])
 def create_employee():
     app.logger.info("Creating new employee")
+    request.json["password"] = bcrypt.generate_password_hash(request.json["password"]).decode('utf-8') 
     employee = request.get_json()
-    return jsonify(bll.create_employee(employee))
+    new_emp = bll.create_employee(employee)
+    return jsonify(new_emp.to_json())
+
+#delete employee
+@app.route('/employees/<id>', methods=['DELETE'])
+def delete_employee(id):
+    return bll.delete_employee_by_id(id)
 @app.route('/employees/<patient_id>', methods=['GET'])
 def get_employee_by_patient(patient_id):
     return bll.find_employee_by_patientid(patient_id)
@@ -47,6 +51,13 @@ def get_employee_by_patient(patient_id):
 def get_employee_by_id(employee_id):
     app.logger.info("Getting employee by id %s", employee_id)
     return bll.find_employee_by_id(employee_id)
+#update employee
+@app.route('/employees/<id>', methods=['PUT'])
+def update_employee(id):
+    updated_emp = request.get_json()
+    result = bll.update_employee_by_id(id, updated_emp)
+    return result
+
 
 #END OF CRUD
 
@@ -83,12 +94,9 @@ def whoami() -> Response:
         if user_id == None:
             return Response("Unauthorized",status=401)
         else:
-            patient = PatientBLL.find_patient_by_id(user_id)
-            patient = PatientBLL.json_to_patient(patient)
-            return jsonify(patient.to_json())
+            return bll.find_employee_by_id(user_id)
     except Exception as e:
         return Response(f"Error: {e}",status=500)
-
 
 
 @app.errorhandler(404)
@@ -101,4 +109,4 @@ def not_found(error):
 
 if __name__ == "__main__" and __package__ is None:
     app.logger.info("Starting employee Service")
-    app.run(host='0.0.0.0',debug=True, port='3002')
+    app.run(host='0.0.0.0',debug=True, port=SERVER_PORT)

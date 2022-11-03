@@ -6,6 +6,7 @@ sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 import mypkg.AppointmentBLL as AppointmentBLL
 app= Flask(__name__)
 
+
 @app.before_request
 def log_request_info():
     pass
