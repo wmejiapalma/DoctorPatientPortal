@@ -39,9 +39,11 @@ def delete_appointment(id:str):
     '''
         INPUT: id: str
         Deletes appointment with matching id \n
-        convets id to ObjectId
+        uses raw id string since they are stored as text in the database
     '''
-    db.mongo_collection.delete_one({"_id":ObjectId(id)})
-    return "Successfully deleted appointment"
+    documents_deleted = db.mongo_collection.delete_one({"_id":id}).deleted_count
+    if (documents_deleted <= 0):
+        return {"status":"failed","message":"no document with that id"}
+    return {"status":"success","message":"document deleted"}
 if __name__ == "__main__":
     pass

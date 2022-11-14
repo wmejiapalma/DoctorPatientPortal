@@ -8,18 +8,26 @@ const UserInfo = (props) => {
         <div id='upcoming'>
           <div className='text-btn-combo flex'>
             <div className='text-2xl flex-1'>here are your upcoming appointments</div>
-            <div className='btn text-secondary'>schedule</div>
+            <a className='btn text-secondary' href="/create_appointment" >schedule</a>
           </div>
           <div className='upcoming-appointments flex flex-none'>
-            <Appointment/>
+            {props.appointments.map((app) => {
+              return <Appointment _id={app._id} type={app.appointment_type} date={app.date_of_appointment} doctor={app.doctor_id} status={app.status} />
+            })}
+            {/*
+             */}
           </div>
         </div>
+        {
+/*
+TODO create appointment stats component
         <div id='lastappointment'>
           <h1 className='text-xl mt-8'>heres what happened last visit</h1>
           <div>
             <AppointmentStats />
           </div>
         </div>
+  */      }
       </div>
   )
 }

@@ -1,7 +1,6 @@
-import React from 'react'
+import React, { useState } from 'react'
 import CustomNav from '../Navbar/CustomNav'
-import { useState } from 'react'
-import {login} from '../../contactApi'
+import {login} from '../../patientAPI'
 import { Link } from 'react-router-dom'
 const Login = () => {
   const [person, setPerson] = useState(setUseState)
@@ -15,8 +14,11 @@ const Login = () => {
  }
   async function logInUser(){
     try{
-      await login(person)
-      window.location.href = "/userhome"
+      await login(person).then(
+        (res) =>{
+          window.location.href = "/userhome"
+        }
+      )
     }
     catch(error){
       console.log(error)

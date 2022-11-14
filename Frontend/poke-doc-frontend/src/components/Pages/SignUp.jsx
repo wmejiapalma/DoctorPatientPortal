@@ -1,6 +1,7 @@
 import React from 'react'
 import CustomNav from '../Navbar/CustomNav'
 import {useState} from 'react'
+import { createUser } from '../../patientAPI'
 const SignUp = () => {
 
   function setUseState(){
@@ -14,24 +15,17 @@ const SignUp = () => {
     }
   }
   function onFormSubmit(){
-    console.log("Submitting Form with data of ",person)
-    fetch('http://localhost:3000/patients', {  // Enter your IP address here
-    method: 'POST', 
-    headers: {'content-type': 'application/json'},
-    mode: 'cors', 
-    body: JSON.stringify(person) // body data type must match "Content-Type" header
-  })
-    console.log("form submitted")
+    createUser(JSON.stringify(person))
+    alert("User Created")
+    window.location.href = "/login"
   }
   const [person, setPerson] = useState(setUseState)
   function setData(e){
-    console.log(e.target)
     const {id, value} = e.target
     setPerson(prevState => ({
       ...prevState,
       [id]: value
     }));
-    console.log(person)
   }
     return (
       <>

@@ -8,6 +8,7 @@ import Home from './components/Pages/Home';
 import NotFound from './components/Pages/NotFound';
 import ProtectedRoutes from './components/Pages/ProtectedRoutes';
 import DoctorLogin from './components/DoctorPages/DoctorLogin';
+import CreateAppointment from "./components/Pages/UserActions/CreateAppointment";
 function App() {
   return (
     <Routes>
@@ -18,6 +19,7 @@ function App() {
       <Route path = "doctor_login" element={<DoctorLogin/>}/>
       <Route element = {<ProtectedRoutes/>}>
         <Route path="userhome" element={<UserHome/>}/>
+        <Route path="/create_appointment" element={<CreateAppointment/>}/>
       </Route>
       <Route path="*" element={<NotFound/>}/>
     </Routes>

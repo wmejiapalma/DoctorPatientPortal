@@ -1,9 +1,10 @@
 import React from 'react'
 import httpClient from '../../httpClient'
+import { logout } from '../../patientAPI'
 
 const NavButton = (props) => {
     function logOut(){
-        httpClient.get("http://localhost:3000/logout").then(
+        logout().then(
             (response)=>{
                 window.location.href = "/"
             }
@@ -15,7 +16,11 @@ const NavButton = (props) => {
             return <a onClick={logOut} class="btn btn-primary opacity-80 m-1 text-error">{props.name}</a>
         }
         else if(props.name == "Home"){
+            //TODO if user is logged in then redirect to user home
             return <a class="btn btn-primary opacity-80 m-1 text-success" href={props.link}>{props.name}</a>
+        }
+        else if(props.name =="Dashboard"){
+            return <a class="btn btn-primary opacity-80 m-1 text-success" href="/userhome">{props.name}</a>
         }
         return <a class="btn btn-primary opacity-80 m-1" href={props.link}>{props.name}</a>
     }    

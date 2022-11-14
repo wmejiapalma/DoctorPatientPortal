@@ -1,5 +1,4 @@
 
-import requests as req
 from flask import Flask, jsonify, request, Response, session
 from flask_session import Session
 from flask_bcrypt import Bcrypt
@@ -8,6 +7,8 @@ import py_eureka_client.eureka_client as eureka_client
 import sys,os
 sys.path.append(os.path.join(os.path.dirname(__file__), '..')) 
 import mypkg.PatientBLL as PatientBLL
+import logging
+logging.basicConfig(level=logging.DEBUG, format = 'Debug - %(asctime)s - %(levelname)s - %(message)s')
 
 #EUREKA DISCOVERY
 SERVER_PORT = 3000
@@ -23,7 +24,7 @@ app.config.from_object('app.Config.ApplicationConfig')
 server_session = Session(app)
 #CORS 
 #Once dockerized i will only allow the dockerized content through cors
-cors = CORS(app, supports_credentials=True, resources={r"/*": {"origins": "*"}})
+#cors = CORS(app, supports_credentials=True, resources={r"/*": {"origins": "*"}})
 #User Password Encryption
 bcrypt = Bcrypt(app)
 #Helpful ENUM
@@ -85,21 +86,29 @@ def get_primary_doctor() -> Response:
     #throw not yet implemented
     return Response("Not Yet Implemented", mimetype=RETURNJSON,status=404)
 
-@app.route("/patients/appointments", methods=['GET'])
-def get_patient_appointments():
-    '''
-    Returns all appointments for the patient \n
-    uses the session to get the patient id
-    '''
-    #throw not yet implemented
+@app.route("/appointments", methods=['GET'])
+def get_patient_appointments() -> Response:
     try:
-        pid = session.get("user_id")
-        appointment_url = os.environ.get("APPOINTMENT_URL")    
-        url = f"{appointment_url}/appointments/{pid}"
-        appointments = req.request(method="GET",url=url)
-        return jsonify(appointments.json())
+        pid = str(session.get("user_id"))
+        patient_appointments = PatientBLL.get_patient_appointments(pid)
+        return jsonify(patient_appointments)
     except Exception as e:
         return Response(f'An error has occured \n {e} \n {session.get("user_id")}', 500)
+@app.route("/appointments", methods=['POST'])
+def post_patient_appointments() -> Response:
+    try:
+        pid = session.get("user_id")
+        json_data = request.json
+        json_data["patient_id"] = str(pid)
+        return jsonify(PatientBLL.create_patient_appointment(json_data))
+    except Exception as e:
+        return Response(f'An error has occured \n {e} \n {session.get("user_id")}', 500)
+@app.route("/appointments/<id>", methods=['DELETE'])
+def delete_patient_appointment(id) -> Response:
+    try:
+        return jsonify(PatientBLL.delete_patient_appointment(id))
+    except Exception as e:
+        return Response(f'An error has occured', 500)
 
 @app.route("/login",methods=["POST"])
 def login() -> Response:
@@ -111,8 +120,8 @@ def login() -> Response:
         if patient == None:
             return Response("Unauthorized",status=401)
         if bcrypt.check_password_hash(patient.password,request.json["password"]):
-            session["user_id"] = patient._id
-            print(session.get("user_id"))
+            session["user_id"] = str(patient._id)
+            app.logger.info(f"User {patient._id} logged in")
             return Response("Login Successful",status=200)
         else:
             return Response("Unauthorized",status=401)
@@ -139,8 +148,6 @@ def whoami() -> Response:
             return jsonify(patient.to_json())
     except Exception as e:
         return Response(f"Error: {e}",status=500)
-
-
 @app.errorhandler(404)
 def not_found(error):
     return Response(jsonify({

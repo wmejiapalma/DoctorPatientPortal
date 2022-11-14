@@ -5,5 +5,5 @@ RUN pip install -r requirements.txt
 COPY Src src
 EXPOSE 3000
 HEALTHCHECK --interval=5s --timeout=3s --retries=3 \
-            CMD curl -f http://localhost:3000/health || exit 1
+            CMD curl -f http://localhost:3003/health || exit 1
 ENTRYPOINT [ "python", "./src/app/main.py" ]

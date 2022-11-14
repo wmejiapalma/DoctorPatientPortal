@@ -1,6 +1,6 @@
 import React from 'react'
 import { Navigate, Outlet } from 'react-router-dom';
-import { checkAuth } from '../../contactApi'
+import { checkAuth } from '../../patientAPI'
 import { useEffect } from 'react';
 const ProtectedRoutes = () => {
     const [auth, setAuth] = React.useState(false)
