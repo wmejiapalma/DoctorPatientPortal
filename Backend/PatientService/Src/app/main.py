@@ -114,9 +114,9 @@ def delete_patient_appointment(id) -> Response:
 def login() -> Response:
     try:
         patient = PatientBLL.find_first_patient(request.json)
+        if patient is None:
+            return Response("No Patient Found", 404)
         patient = PatientBLL.json_to_patient(patient)
-        if(patient is None):
-            return Response("Could not find patient", 404)
         if patient == None:
             return Response("Unauthorized",status=401)
         if bcrypt.check_password_hash(patient.password,request.json["password"]):

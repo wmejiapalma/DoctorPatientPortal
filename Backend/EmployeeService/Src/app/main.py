@@ -1,3 +1,4 @@
+import logging
 from flask import Flask, jsonify, request, json, Response, session
 from flask_session import Session
 from flask_bcrypt import Bcrypt
@@ -16,6 +17,8 @@ app.config.from_object('app.Config.ApplicationConfig')
 server_session = Session(app)
 cors = CORS(app, supports_credentials=True, resources={r"/*": {"origins": "*"}})
 bcrypt = Bcrypt(app)
+logging.basicConfig(level=logging.DEBUG, format = 'Debugging: %(asctime)s - %(levelname)s - %(message)s')
+
 
 @app.before_request
 def log_request_info():
@@ -38,6 +41,10 @@ def create_employee():
     employee = request.get_json()
     new_emp = bll.create_employee(employee)
     return jsonify(new_emp.to_json())
+@app.route('/doctors', methods=['GET'])
+def get_doctors():
+    app.logger.info("Getting all doctors")
+    return jsonify(bll.get_doctors())
 
 #delete employee
 @app.route('/employees/<id>', methods=['DELETE'])
@@ -64,15 +71,16 @@ def update_employee(id):
 @app.route("/login",methods=["POST"])
 def login() -> Response:
     try:
-        sessionuser = session.get("user_id")
+        sessionuser = session.get("doctor_id")
         if sessionuser is not None: #if user is already logged in
             return Response("User already logged in",status=200)
         person = bll.find_employee_by_info(request.get_json())
+        app.logger.info("Logging in user %s", person)
         if person is None:
             return Response("Unauthorized",status=401)
         if bcrypt.check_password_hash(person.password,request.json["password"]):
-            session["user_id"] = person._id
-            print(session.get("user_id"))
+            session["doctor_id"] = person._id
+            print(session.get("doctor_id"))
             return Response("Login Successful",status=200)
         else:
             return Response("Unauthorized",status=401)
@@ -82,7 +90,7 @@ def login() -> Response:
 @app.route("/logout",methods=["GET"])
 def log_out_user() -> Response:
     try:
-        session.pop("user_id",None)
+        session.pop("doctor_id",None)
         return Response("Logout Successful",status=200)
     except Exception as e:
         return Response(f"Error: {e}",status=500)
@@ -90,14 +98,34 @@ def log_out_user() -> Response:
 @app.route("/whoami",methods=["GET"])
 def whoami() -> Response:
     try:
-        user_id = session.get("user_id")
-        if user_id == None:
+        doctor_id = session.get("doctor_id")
+        if doctor_id == None:
             return Response("Unauthorized",status=401)
         else:
-            return bll.find_employee_by_id(user_id)
+            return bll.find_employee_by_id(doctor_id)
     except Exception as e:
         return Response(f"Error: {e}",status=500)
 
+#Auth Routes
+@app.route("/appointments", methods=["GET"])
+def get_appointments():
+    try:
+        doctor_id = session.get("doctor_id")
+        if doctor_id == None:
+            return Response("Unauthorized",status=401)
+        else:
+            return bll.get_appointments(doctor_id)
+    except Exception as e:
+        return Response(f"Error: {e}",status=500)
+@app.route("/appointments", methods=["POST"])
+def create_appointment():
+    pass
+@app.route("/patients", methods=["GET"])
+def get_patients():
+    pass
+@app.route("/patients", methods=["POST"])
+def create_patient():
+    pass
 
 @app.errorhandler(404)
 def not_found(error):

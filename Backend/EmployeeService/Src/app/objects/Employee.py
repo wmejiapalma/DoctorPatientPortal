@@ -22,7 +22,9 @@ o	int patient_id \n
     lastname: str
     position: str
     DOB: date 
+    password: str
     patient_id: list = field(default_factory = list)
+
 
     def __init__(self, **kwargs) -> None:
         '''

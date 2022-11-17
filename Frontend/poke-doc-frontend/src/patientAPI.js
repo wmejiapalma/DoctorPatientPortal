@@ -1,4 +1,5 @@
 import httpClient from "./httpClient"
+//const gatewayURL = "https://bc62-172-83-4-34.ngrok.io"
 const gatewayURL = "http://127.0.0.1:8888"
 const MICROSERVICE = "patientservice"
 const URL = `${gatewayURL}/${MICROSERVICE}`
@@ -22,7 +23,6 @@ export async function logout(){
 export async function createUser(user){
     return httpClient.post(`${URL}/patients`,user)
 }
-
 // /WHOAMI
 export async function checkAuth(){
     try {
@@ -34,7 +34,9 @@ export async function checkAuth(){
 }
 
 export async function getAppointments(){
-    return httpClient.get(`${URL}/appointments`)
+    let res = httpClient.get(`${URL}/appointments`)
+    console.log(res)
+    return res
 }
 export async function createAppointmentTest(){
     
@@ -46,14 +48,9 @@ export async function createAppointmentTest(){
     }
     return httpClient.post(`${URL}/appointments`,appointment)
 }
-export async function createAppointment(date,doctor,type,notes){
-    const appointment = {
-        "doctor_id": doctor,
-        "date_of_appointment": date,
-        "status": "WAITING",
-        "appointment_type": type,
-        "notes": notes
-    }
+
+export async function createAppointment(appointment){
+    //APPOINTMENT IS A JSON OBJECT
     return httpClient.post(`${URL}/appointments`,appointment)
 }
 export async function deleteAppointment(id){

@@ -1,26 +1,63 @@
 import React from 'react'
-import { useState } from 'react'
+import { useState,useEffect } from 'react'
+import { getDoctors } from '../../../doctorAPI'
 import CustomNav from '../../Navbar/CustomNav'
+import { createAppointment } from '../../../patientAPI'
 const CreateAppointment = () => {
     function setUseState(){
         return {
-            "date": "",
-            "doctor": "",
+            "date_of_appointment": "",
+            "doctor_id": "",
+            "doctor_name": "",
             "appointment_type": "",
-            "status": "",
+            "status": "uncofirmed",
             "patient_id": "",
             "notes": ""
         }
     }
     const [appointment, setAppointment] = useState(setUseState)
-    function setData(e){
+    const [loading, setLoading] = useState(true)
+    const [doctors, setDoctors] = useState(null)
+    //seteffect to get doctors
+    useEffect(() => {
+        setLoading(true)
+        getDoctors().then((res)=>{
+            console.log(res.data)
+            setDoctors(res.data)
+            setLoading(false)
+        })
+    }, [])
+    async function setData(e){
+      await setAppointment(prevState => ({
+          ...prevState,
+          [e.target.id]: e.target.value
+      }))
+    }
+    function setDoctor(e){
+      let doctor_id = e.target.value
+      //find doctor in list of doctors
+      let doctor = doctors.find((doctor)=>{
+        return doctor._id == doctor_id
+      })
       setAppointment(prevState => ({
           ...prevState,
-          [id]: value
-      }));
+          "doctor_id": doctor_id,
+          "doctor_name": doctor.firstname + " " + doctor.lastname
+      }))
     }
     function onFormSubmit(){
-        console.log(appointment)
+      //if fields are not filled out then dont let them submit
+      if(appointment.date == "" || appointment.doctor_id == "" || appointment.appointment_type == ""){
+        alert("Please fill out all fields")
+        return
+      }
+      createAppointment(appointment).then(()=>{
+      window.location.href = "/userhome"
+      }
+      )
+    }
+    function displayDoctor(doctor){
+      return <option value={doctor._id}>{doctor.firstname} {doctor.lastname}</option>
     }
     return (
         <div>
@@ -30,16 +67,16 @@ const CreateAppointment = () => {
           <div class="card-body justify-center ">
             <label className="input-group my-2 flex">
               <span className="w-32 min-w-min">Date of Appointment</span>
-              <input id="date" placeholder='Date' required type="date" className="input input-bordered flex-1"   onChange={setData}/>
+              <input id="date_of_appointment" placeholder='Date' required type="date" className="input input-bordered flex-1"  onChange={setData}/>
             </label>
             <label>
               <span className="w-32 min-w-min">Doctor</span>
             </label>
-              <select id="doctor" className="select w-full max-w-xs" onChange={setData}>
+              <select id="doctor" className="select w-full max-w-xs" onChange={setDoctor}>
                 <option disabled selected>Choose a Doctor</option>
-                <option>Test Doctor</option>
-                <option>Test Doctor2</option>
-                {/* Map list of doctors to <option>*/}
+                {
+                  loading ? <option>Loading...</option> : doctors.map((doctor)=>displayDoctor(doctor))
+                }
               </select>
           <label>
             <span className="w-32 min-w-min">Appointment Type</span>

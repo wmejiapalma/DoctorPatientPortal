@@ -1,9 +1,8 @@
 import React from 'react'
-import { Navigate, Outlet } from 'react-router-dom';
-import { checkAuth } from '../../patientAPI'
+import { checkAuth } from '../../doctorAPI'
 import { useEffect } from 'react';
-import { checkAuth as doctorCheckAuth } from '../../doctorAPI';
-const ProtectedRoutes = () => {
+import { Outlet } from 'react-router-dom';
+const DoctorProtectedRoutes = () => {
     const [auth, setAuth] = React.useState(false)
     const [loading, setLoading] = React.useState(true)
     useEffect(()=>{
@@ -32,4 +31,4 @@ const ProtectedRoutes = () => {
     )
 }
 
-export default ProtectedRoutes
+export default DoctorProtectedRoutes

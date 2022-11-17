@@ -16,5 +16,7 @@ def get_all_appointments():
     return list(mongo_collection.find())
 def get_appointments_by_pid(object_id):
     return list(mongo_collection.find({"patient_id":object_id}))
+def get_appointments_by_employee(object_id):
+    return list(mongo_collection.find({"doctor_id":object_id}))
 if __name__ == "__main__":
     print("this is a module")

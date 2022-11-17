@@ -1,6 +1,6 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
-import { deleteAppointment } from '../../../patientAPI'
+
 import AppointmentConfirmDelete from './AppointmentConfirmDelete'
 const Appointment = (props) => {
 {/*
@@ -23,11 +23,11 @@ function deleteApp(){
   return (
     <>
       <div class="card card-compact w-48 bg-violet-900 shadow-xl m-2">
-        <figure><img src="" alt="Shoes" /></figure>
+        <figure><img src=""/></figure>
         <div class="card-body items-center">
           <h2 class="card-title">{props.type}</h2>
-          <p>{props.doctor}</p>
           <p>{props.date}</p>
+          <p>{props.doctor_name}</p>
           <p>{props.status}</p>
           <div class="card-actions justify-end">
             <button class="btn btn-error" onClick={deleteApp}>Cancel</button>

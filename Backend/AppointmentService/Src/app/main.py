@@ -48,7 +48,12 @@ def get_appointment(id) -> Response:
         return jsonify(AppointmentBLL.get_appointments_by_pid(str(id)))
     except Exception as e:
         return Response((f"an error has occured \n {e}"), 500)
-
+@app.route("/appointments/employee/<id>", methods=['GET'])
+def get_appointment_by_employee(id) -> Response:
+    try:
+        return jsonify(AppointmentBLL.get_appointments_by_employee(str(id)))
+    except Exception as e:
+        return Response((f"an error has occured \n {e}"), 500)
 @app.route("/appointments/<id>", methods=['DELETE'])
 def delete_appointment(id) -> Response:
     try:

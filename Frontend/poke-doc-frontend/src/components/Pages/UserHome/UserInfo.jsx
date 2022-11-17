@@ -12,7 +12,7 @@ const UserInfo = (props) => {
           </div>
           <div className='upcoming-appointments flex flex-none'>
             {props.appointments.map((app) => {
-              return <Appointment _id={app._id} type={app.appointment_type} date={app.date_of_appointment} doctor={app.doctor_id} status={app.status} />
+              return <Appointment _id={app._id} type={app.appointment_type} date={app.date_of_appointment} doctor_name={app.doctor_name} doctor={app.doctor_id} status={app.status} />
             })}
             {/*
              */}

@@ -10,7 +10,7 @@ mongo_collection = mongo_db.employees
 print(f"Successfully connected to Mongo Database: {os.environ.get('MONGO_URL')}")
 
 def insert(employee):
-    mongo_collection.insert_one(employee.to_json())
+    mongo_collection.insert_one(employee.to_json_unsafe())
 
 def get_all():
     return list(mongo_collection.find())
@@ -48,8 +48,11 @@ def update_by_id(id, e):
         "DOB":e.DOB,
         "patient_id":e.patient_id,
         "posistion":e.position,
+        "password":e.password,
     }}
     res = mongo_collection.update_one(id_filter,new_values)
     return res.modified_count
+def get_all_doctors():
+    return list(mongo_collection.find({"position":"doctor"}))
 if __name__ == "__main__":
     print("this is a module")

@@ -45,5 +45,16 @@ def delete_appointment(id:str):
     if (documents_deleted <= 0):
         return {"status":"failed","message":"no document with that id"}
     return {"status":"success","message":"document deleted"}
+def get_appointments_by_employee(id:str):
+    '''
+        INPUT: employee_id: str
+        Returns all appointments with a matching employee_id \n
+        uses raw id string since they are stored as text in the database
+    '''
+    appointments = db.get_appointments_by_employee(id)
+    app_return = list()
+    for appointment in appointments:
+        app_return.append(Appointment.Appointment(**appointment).to_json())
+    return app_return
 if __name__ == "__main__":
     pass

@@ -5,7 +5,8 @@ sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 import mypkg.Database as db
 import app.objects.Employee as Employee
 from bson import ObjectId
-
+import requests as req
+APPOINTMENT_URL = os.environ.get("APPOINTMENT_URL")
 #the functions that return objects should not be formatted as a response object
 #the functions that return responses (200,404,500) should return Response Objects
 
@@ -50,7 +51,7 @@ def find_employee_by_id(id):
     '''
     try:
         employee = db.get_by_id(id)#only works if the id is a string
-        employee = Employee.Employee(**employee).to_json()
+        employee = Employee.Employee(**employee).to_json_unsafe()
         return jsonify(employee)
     except Exception as e:
         return Response({f"employee with id {id} not found"},status=404)
@@ -68,7 +69,6 @@ def find_employee_by_info(json):
     '''
     try:
         employee = db.get_by_info(json)
-        print(employee)
         return Employee.Employee(**employee)
     except Exception as e:
         print(e)
@@ -108,5 +108,20 @@ def update_employee_by_id(id,new_employee):
     except Exception as e:
         print(e)
         return Response(status=500)
+def get_doctors():
+    '''
+        Gets all doctors from database \n
+        returns list of doctors
+    '''
+    doctors = db.get_all_doctors()
+    doc_return = list()
+    for doctor in doctors:
+        doc_return.append(Employee.Employee(**doctor).to_json())
+    return doc_return
+
+def get_appointments(id):
+    url = f"{APPOINTMENT_URL}/appointments/employee/{id}"
+    appointment = req.request(method="GET",url=url)
+    return appointment.json()
 if __name__ == "__main__":
     pass

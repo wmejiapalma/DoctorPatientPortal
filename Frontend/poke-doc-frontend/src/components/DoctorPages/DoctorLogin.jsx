@@ -2,6 +2,7 @@ import React from 'react'
 import CustomNav from '../Navbar/CustomNav'
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
+import { login } from '../../doctorAPI'
 
 const DoctorLogin = () => {
     const [person, setPerson] = useState(setUseState)
