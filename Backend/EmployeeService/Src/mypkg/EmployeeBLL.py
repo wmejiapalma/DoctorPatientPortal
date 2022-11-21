@@ -123,5 +123,11 @@ def get_appointments(id):
     url = f"{APPOINTMENT_URL}/appointments/employee/{id}"
     appointment = req.request(method="GET",url=url)
     return appointment.json()
+def confirm_appointment(id):
+    url = f"{APPOINTMENT_URL}/appointments/confirm/{id}"
+    appointment = req.request(method="PUT",url=url)
+    if appointment.status_code == 200:
+        return Response(status=200)
+    return Response(status=401)
 if __name__ == "__main__":
     pass

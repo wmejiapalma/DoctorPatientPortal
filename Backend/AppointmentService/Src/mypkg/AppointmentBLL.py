@@ -3,6 +3,7 @@ sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 import mypkg.Database as db
 import app.objects.Appointment as Appointment
 from bson import ObjectId
+from flask import Response
 
 def create_appointment(appointment):
     '''
@@ -56,5 +57,15 @@ def get_appointments_by_employee(id:str):
     for appointment in appointments:
         app_return.append(Appointment.Appointment(**appointment).to_json())
     return app_return
+def confirm_appointment_by_id(id:str):
+    '''
+        INPUT: id: str
+        Confirms appointment with matching id \n
+        uses raw id string since they are stored as text in the database
+    '''
+    result = db.confirm_appointment_by_id(id)
+    if (result.modified_count <= 0):
+        return Response("No document with that id",status=404)
+    return Response("Appointment confirmed",status=200)
 if __name__ == "__main__":
     pass

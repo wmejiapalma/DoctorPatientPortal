@@ -3,7 +3,7 @@ import { Navigate, Outlet } from 'react-router-dom';
 import { checkAuth } from '../../patientAPI'
 import { useEffect } from 'react';
 import { checkAuth as doctorCheckAuth } from '../../doctorAPI';
-const ProtectedRoutes = () => {
+const ProtectedRoutes = (props) => {
     const [auth, setAuth] = React.useState(false)
     const [loading, setLoading] = React.useState(true)
     useEffect(()=>{
@@ -23,6 +23,7 @@ const ProtectedRoutes = () => {
         }
         if(auth){
             console.log(auth)
+            props.update(true)
             return (<Outlet/>)
         }
         return (<Navigate to="/"/>)

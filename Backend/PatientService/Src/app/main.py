@@ -23,8 +23,6 @@ app.config.from_object('app.Config.ApplicationConfig')
 #Getting the redis db for user sessions
 server_session = Session(app)
 #CORS 
-#Once dockerized i will only allow the dockerized content through cors
-#cors = CORS(app, supports_credentials=True, resources={r"/*": {"origins": "*"}})
 #User Password Encryption
 bcrypt = Bcrypt(app)
 #Helpful ENUM
@@ -34,7 +32,6 @@ RETURNJSON = "application/json"
 def log_request_info():
     pass
     #Happens before every request
-
 @app.route('/health', methods=['GET'])
 def json() -> str:
     app.logger.info("Health Check")
@@ -120,6 +117,7 @@ def login() -> Response:
         if patient == None:
             return Response("Unauthorized",status=401)
         if bcrypt.check_password_hash(patient.password,request.json["password"]):
+            #WORKS
             session["user_id"] = str(patient._id)
             app.logger.info(f"User {patient._id} logged in")
             return Response("Login Successful",status=200)

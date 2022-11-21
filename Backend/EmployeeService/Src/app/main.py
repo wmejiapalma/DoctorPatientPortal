@@ -15,7 +15,6 @@ eureka_client.init(eureka_server="http://eureka:8761/eureka",
 app= Flask(__name__)
 app.config.from_object('app.Config.ApplicationConfig')
 server_session = Session(app)
-cors = CORS(app, supports_credentials=True, resources={r"/*": {"origins": "*"}})
 bcrypt = Bcrypt(app)
 logging.basicConfig(level=logging.DEBUG, format = 'Debugging: %(asctime)s - %(levelname)s - %(message)s')
 
@@ -115,6 +114,16 @@ def get_appointments():
             return Response("Unauthorized",status=401)
         else:
             return bll.get_appointments(doctor_id)
+    except Exception as e:
+        return Response(f"Error: {e}",status=500)
+@app.route("/confirm/<id>", methods=["PUT"])
+def confirm_appointment(id):
+    try:
+        doctor_id = session.get("doctor_id")
+        if doctor_id == None:
+            return Response("Unauthorized",status=401)
+        else:
+            return bll.confirm_appointment(id)
     except Exception as e:
         return Response(f"Error: {e}",status=500)
 @app.route("/appointments", methods=["POST"])

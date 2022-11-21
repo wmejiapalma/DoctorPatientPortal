@@ -8,7 +8,7 @@ const DoctorHome = () => {
     const [loading, setLoading] = React.useState(true)
     const [user, setUser] = React.useState(null)
     const [appointments, setAppointments] = React.useState(null)
-    //TODO add appointments to state
+    
     React.useEffect(() => {(getUser())},[]);
     async function getUser(){
         const user = await currentUser(); 
@@ -28,7 +28,6 @@ const DoctorHome = () => {
     }
     return (
         <>
-            <CustomNav links={["Dashboard","Appointments","Stats","Profile","Secure Log Out"]}/>
             <div id="userinfo" class="mx-5">
             {getUserInfo()}
             </div>

@@ -25,15 +25,8 @@ const UserHome = () => {
       return (<UserInfo user={user} appointments={appointments}/>)
     }
   }
-  function appointmentTest(){
-    createAppointment().then(()=>{
-      window.location.reload()
-    })
-  }
   return (
     <>
-        <CustomNav links={["Dashboard","Appointments","Stats","Profile","Log out"]}/>
-        <div className="btn" onClick={appointmentTest}>Create Appointment</div>
         <div id="userinfo" class="mx-5">
           {getUserInfo()}
         </div>

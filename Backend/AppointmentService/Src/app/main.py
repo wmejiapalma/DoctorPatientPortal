@@ -60,6 +60,12 @@ def delete_appointment(id) -> Response:
         return jsonify(AppointmentBLL.delete_appointment(str(id)))
     except Exception as e:
         return Response((f"an error has occured \n {e}"), 500)
+@app.route("/appointments/confirm/<id>", methods=['PUT'])
+def confirm_appointment(id) -> Response:
+    try:
+        return AppointmentBLL.confirm_appointment_by_id(id)
+    except Exception as e:
+        return Response((f"an error has occured \n {e}"), 500)
 
 @app.route("/doctors", methods=['GET'])
 def get_doctors() -> Response:
@@ -76,10 +82,8 @@ def get_available_doctors() -> Response:
 
 @app.errorhandler(404)
 def not_found(error):
-    return Response(jsonify({
-        'error': 'Not found',
-        "Headers": ("%s",request.headers),
-        "Body": ("%s",request.get_data())}), 404)
+    return Response(jsonify({'error': 'Not found'}), 404)
+
 
 
 

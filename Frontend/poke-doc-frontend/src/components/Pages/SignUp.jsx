@@ -29,7 +29,6 @@ const SignUp = () => {
   }
     return (
       <>
-      <CustomNav links={["Home","Sign up","Log in"]}/>
       <div className="flex justify-center items-center my-4">
         <div id="LoginForm" className='card card-compact w-96 bg-primary shadow-xl my-8 '>
           <div class="card-body justify-center ">

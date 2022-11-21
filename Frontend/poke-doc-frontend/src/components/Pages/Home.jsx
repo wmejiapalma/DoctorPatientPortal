@@ -2,9 +2,10 @@ import React from 'react'
 import CustomNav from '../Navbar/CustomNav'
 import PokeDocHero from '../../assets/PokeDocHero.png'
 const home = () => {
+
+
   return (
     <>
-      <CustomNav links={["Home","Sign up","Log in"]}/>
       <div id='hero' className='hero my-8 lg:px-96 sm:px-12'>
         <div id="hero-content" className='hero-content justify-center'>
           <div id="hero-title" className='text-left flex flex-col'>

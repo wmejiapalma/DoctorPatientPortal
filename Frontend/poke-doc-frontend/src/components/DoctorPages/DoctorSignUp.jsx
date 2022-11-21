@@ -13,10 +13,12 @@ const DoctorSignUp = () => {
             "email": "",
             "password": "",
             "DOB": "",
+            "position": "doctor", //TODO change this to be variable
         }
         }
         function onFormSubmit(){
             createUser(JSON.stringify(person)).then(()=>{
+                //TODO add if statement to check if user was created
                 alert("User Created")
                 window.location.href = "/login"
             })
@@ -31,9 +33,11 @@ const DoctorSignUp = () => {
         }
         return (
             <>
-            <CustomNav links={["Home","Sign up","Log in"]}/>
             <div className="flex justify-center items-center my-4">
             <div id="LoginForm" className='card card-compact w-96 bg-primary shadow-xl my-8 '>
+                <div className="card-title justify-center my-3">
+                    Doctor Sign Up
+                </div>
                 <div class="card-body justify-center ">
                 <label className="flex input-group my-2">
                     <span className="flex-1">First Name</span>

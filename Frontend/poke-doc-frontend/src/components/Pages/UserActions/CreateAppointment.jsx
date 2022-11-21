@@ -10,7 +10,7 @@ const CreateAppointment = () => {
             "doctor_id": "",
             "doctor_name": "",
             "appointment_type": "",
-            "status": "uncofirmed",
+            "status": "unconfirmed",
             "patient_id": "",
             "notes": ""
         }
@@ -18,6 +18,8 @@ const CreateAppointment = () => {
     const [appointment, setAppointment] = useState(setUseState)
     const [loading, setLoading] = useState(true)
     const [doctors, setDoctors] = useState(null)
+    const current = new Date();
+    const date = `${current.getFullYear()}-${current.getMonth()+1}-${current.getDate()}`;
     //seteffect to get doctors
     useEffect(() => {
         setLoading(true)
@@ -61,13 +63,13 @@ const CreateAppointment = () => {
     }
     return (
         <div>
-        <CustomNav links={["Dashboard","Appointments","Stats","Profile","Log out"]}/>
+        <CustomNav links={["Dashboard","Profile","Log out"]}/>
         <div className="flex justify-center items-center my-4">
         <div id="LoginForm" className='card card-compact w-96 bg-primary shadow-xl my-8 '>
           <div class="card-body justify-center ">
             <label className="input-group my-2 flex">
               <span className="w-32 min-w-min">Date of Appointment</span>
-              <input id="date_of_appointment" placeholder='Date' required type="date" className="input input-bordered flex-1"  onChange={setData}/>
+              <input id="date_of_appointment" placeholder='Date' required type="date" min={date} max="2024-01-01" className="input input-bordered flex-1"  onChange={setData}/>
             </label>
             <label>
               <span className="w-32 min-w-min">Doctor</span>

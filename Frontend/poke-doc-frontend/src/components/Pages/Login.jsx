@@ -53,7 +53,6 @@ const Login = () => {
 
   return (
     <div>
-        <CustomNav links={["Home","Sign up","Log in"]}/>
         <div className="flex justify-center items-center my-4 ">
         <div id="LoginForm" className='card card-compact w-96 bg-primary shadow-xl my-8 '>
           <div className="card-title justify-center my-3">
@@ -83,7 +82,7 @@ const Login = () => {
             <div className="DividerAndSignUp">
               <div className='divider'>OR</div>
               <div className='flex justify-center m-3 items-center'>
-                <a className="btn btn-secondary flex-1 mx-5" >Sign up</a>
+                <Link to="/sign_up" className="btn btn-secondary flex-1 mx-5" >Sign up</Link>
                 <Link to="/doctor_login" className="btn btn-secondary flex-1 mx-5" >Doctor Login</Link>
               </div>
             </div>

@@ -2,7 +2,7 @@ import React from 'react'
 import { checkAuth } from '../../doctorAPI'
 import { useEffect } from 'react';
 import { Outlet } from 'react-router-dom';
-const DoctorProtectedRoutes = () => {
+const DoctorProtectedRoutes = (props) => {
     const [auth, setAuth] = React.useState(false)
     const [loading, setLoading] = React.useState(true)
     useEffect(()=>{
@@ -22,6 +22,7 @@ const DoctorProtectedRoutes = () => {
         }
         if(auth){
             console.log(auth)
+            props.update(true)
             return (<Outlet/>)
         }
         return (<Navigate to="/"/>)

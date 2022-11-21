@@ -52,7 +52,6 @@ const DoctorLogin = () => {
    
   return (
     <>
-        <CustomNav links={["Home","Appointments","Sign Up","Log in"]}/>
         <div className="flex justify-center items-center my-4">
         <div id="LoginForm" className='card card-compact w-96 bg-primary shadow-xl my-8 '>
           <div className="card-title justify-center my-3">
