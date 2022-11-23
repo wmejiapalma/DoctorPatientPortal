@@ -18,14 +18,18 @@ const NavButton = (props) => {
             }
         )
     }
+    function completeLogout(){
+        props.setAuth(false)
+        logOut().then(()=>{
+            doctorLogOut()
+        })
+
+    }
 
     function getButton(){
         
         if (props.name == "Log out"){
-            return <a onClick={logOut} class="btn btn-primary opacity-80 m-1 text-error">{props.name}</a>
-        }
-        else if (props.name == "Secure Log Out"){
-            return <a onClick={doctorLogOut} class="btn btn-primary opacity-80 m-1 text-error">{props.name}</a>
+            return <a onClick={completeLogout} class="btn btn-primary opacity-80 m-1 text-error">{props.name}</a>
         }
         else if(props.name == "Home"){
             //TODO if user is logged in then redirect to user home

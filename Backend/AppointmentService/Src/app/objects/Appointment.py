@@ -32,6 +32,7 @@ o	[ENUM] AppointmentType \n
         self.date_of_appointment = kwargs.get("date_of_appointment", None)
         self.status = kwargs.get("status", None)
         self.appointment_type = kwargs.get("appointment_type", None)
+        self.notes = kwargs.get("notes", None)
     def get_doctor_name(self):
         #TODO get doctor name from employee service using doctor_id
         url = f"{EMPLOYEE_URL}/employees/id/{self.doctor_id}"

@@ -18,6 +18,14 @@ server_session = Session(app)
 bcrypt = Bcrypt(app)
 logging.basicConfig(level=logging.DEBUG, format = 'Debugging: %(asctime)s - %(levelname)s - %(message)s')
 
+def verifyAuth() -> bool:
+    '''
+    Verifies the user is logged in
+    TRUE: user is logged in
+    FALSE: INVALID
+    '''
+    person = session.get("doctor_id",None)
+    return person != None
 
 @app.before_request
 def log_request_info():
@@ -116,14 +124,35 @@ def get_appointments():
             return bll.get_appointments(doctor_id)
     except Exception as e:
         return Response(f"Error: {e}",status=500)
-@app.route("/confirm/<id>", methods=["PUT"])
+@app.route("/appointments/confirm/<id>", methods=["PUT"])
 def confirm_appointment(id):
     try:
-        doctor_id = session.get("doctor_id")
-        if doctor_id == None:
-            return Response("Unauthorized",status=401)
-        else:
+        valid = verifyAuth()
+        if valid:
             return bll.confirm_appointment(id)
+        else:
+            return Response("Unauthorized",status=401)
+    except Exception as e:
+        return Response(f"Error: {e}",status=500)
+
+@app.route("/appointments/cancel/<id>", methods=["PUT"])
+def cancel_appointment(id):
+    try:
+        valid = verifyAuth()
+        if valid:
+            return bll.cancel_appointment(id)
+        else:
+            return Response("Unauthorized",status=401)
+    except Exception as e:
+        return Response(f"Error: {e}",status=500)
+@app.route("/appointments/complete/<id>", methods=["PUT"])
+def complete_appointment(id):
+    try:
+        valid = verifyAuth()
+        if valid:
+            return bll.complete_appointment(id)
+        else:
+            return Response("Unauthorized",status=401)
     except Exception as e:
         return Response(f"Error: {e}",status=500)
 @app.route("/appointments", methods=["POST"])

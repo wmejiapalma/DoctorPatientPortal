@@ -67,5 +67,15 @@ def confirm_appointment_by_id(id:str):
     if (result.modified_count <= 0):
         return Response("No document with that id",status=404)
     return Response("Appointment confirmed",status=200)
+def complete_appointment_by_id(id:str):
+    '''
+        INPUT: id: str
+        Completes appointment with matching id \n
+        uses raw id string since they are stored as text in the database
+    '''
+    result = db.complete_appointment_by_id(id)
+    if (result.modified_count <= 0):
+        return Response("No document with that id",status=404)
+    return Response("Appointment completed",status=200)
 if __name__ == "__main__":
     pass

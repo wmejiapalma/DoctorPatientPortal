@@ -2,7 +2,8 @@ import React, { useState } from 'react'
 import CustomNav from '../Navbar/CustomNav'
 import {login} from '../../patientAPI'
 import { Link } from 'react-router-dom'
-const Login = () => {
+import { useEffect } from 'react'
+const Login = (props) => {
   const [person, setPerson] = useState(setUseState)
   function setUseState(){
     return {
@@ -12,6 +13,18 @@ const Login = () => {
      "DOB": "",
    }
  }
+ //useEffect
+  useEffect(()=>{
+    if(props.activeSession){
+      switch(props.personType){
+        case "patient":
+          window.location.href = "/userhome"
+          break;
+        case "doctor":
+          window.location.href = "/doctorhome"
+      }
+    }
+  },[])
   async function logInUser(){
     try{
       await login(person).then(
@@ -28,11 +41,8 @@ const Login = () => {
       } catch (error) {
         resCode = 500
       }
-      if (resCode == 401){
-        alert("Invalid Credentials")
-      }
-      else{
-        alert("this is awkward, something went wrong")
+      if(resCode != 200){
+        alert("Invalid Login")
       }
     }
 }

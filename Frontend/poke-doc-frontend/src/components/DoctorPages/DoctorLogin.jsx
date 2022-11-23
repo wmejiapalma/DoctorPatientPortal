@@ -27,11 +27,8 @@ const DoctorLogin = () => {
         } catch (error) {
           resCode = 500
         }
-        if (resCode == 401){
-          alert("Invalid Credentials")
-        }
-        else{
-          alert("this is awkward, something went wrong")
+        if(resCode != 200){
+          alert("Invalid Login")
         }
       }
   }

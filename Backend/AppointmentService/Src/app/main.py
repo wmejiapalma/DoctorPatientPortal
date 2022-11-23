@@ -66,6 +66,12 @@ def confirm_appointment(id) -> Response:
         return AppointmentBLL.confirm_appointment_by_id(id)
     except Exception as e:
         return Response((f"an error has occured \n {e}"), 500)
+@app.route("/appointments/complete/<id>", methods=['PUT'])
+def complete_appointment(id) -> Response:
+    try:
+        return AppointmentBLL.complete_appointment_by_id(id)
+    except Exception as e:
+        return Response((f"an error has occured \n {e}"), 500)
 
 @app.route("/doctors", methods=['GET'])
 def get_doctors() -> Response:

@@ -129,5 +129,23 @@ def confirm_appointment(id):
     if appointment.status_code == 200:
         return Response(status=200)
     return Response(status=401)
+def cancel_appointment():
+    url = f"{APPOINTMENT_URL}/appointments/{id}"
+    appointment = req.request(method="DELETE",url=url)
+    if appointment.status_code == 200:
+        return Response(status=200)
+    return Response(status=401)
+def complete_appointment():
+    url = f"{APPOINTMENT_URL}/appointments/{id}"
+    appointment = req.request(method="PUT",url=url)
+    if appointment.status_code == 200:
+        return Response(status=200)
+    return Response(status=401)
+def complete_appointment(id):
+    url = f"{APPOINTMENT_URL}/appointments/complete/{id}"
+    appointment = req.request(method="PUT",url=url)
+    if appointment.status_code == 200:
+        return Response(status=200)
+    return Response(status=401)
 if __name__ == "__main__":
     pass

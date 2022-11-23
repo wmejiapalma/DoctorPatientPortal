@@ -28,7 +28,7 @@ const CustomNav = (props) => {
           getLinks().map((value,index)=>{
             let link = "/"+value.toLowerCase()
             link = link.replace(" ","_")
-            return <NavButton name={value} link={link}/>
+            return <NavButton name={value} link={link} setAuth={props.setAuth}/>
         })
         }
     </ul> 

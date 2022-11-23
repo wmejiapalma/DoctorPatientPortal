@@ -3,7 +3,7 @@ import { Outlet } from 'react-router-dom'
 
 const UnAuthRoutes = (props) => {
     function getComponent(){
-        props.update(false)
+       //props.update(true)
         return (<Outlet/>)
     }
   return (

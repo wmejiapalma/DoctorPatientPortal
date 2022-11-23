@@ -27,7 +27,10 @@ export async function getDoctors(){
     return httpClient.get(`${URL}/doctors`)
 }
 export async function confirmAppointment(id){
-    return httpClient.put(`${URL}/confirm/${id}`)
+    return httpClient.put(`${URL}/appointments/confirm/${id}`)
+}
+export async function completeAppointment(id){
+    return httpClient.put(`${URL}/appointments/complete/${id}`)
 }
 // /WHOAMI
 export async function checkAuth(){
