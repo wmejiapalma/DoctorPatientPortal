@@ -39,6 +39,9 @@ const doctorCompleteAppointment = (data)=>{
   }
   setCompleteAppointment(data)
 }
+const doctorAddAppointmentNote = (data)=>{
+  //add note to appointment
+}
 const getStatusColor = (status)=>{
   switch(status){
     case "unconfirmed":
@@ -67,19 +70,25 @@ const getPersonTitle = ()=>{
         <figure><img src=""/></figure>
         <div class="card-body items-center">
           <h2 class="card-title">{props.type}</h2>
-          <p>{dayjs(props.date).format("DD/MM/YY hh:mm A")}</p>
+          <p>{dayjs(props.date).format("MM/DD/YY hh:mm A")}</p>
           <p>{getPersonTitle()} {props.doctor_name}</p>
           <p className={getStatusColor(props.status) + " capitalize"}>{props.status}</p>
           <div class="card-actions justify-end flex flex-row">
             {props.status =="complete"? null : <button class="btn btn-error flex-auto" onClick={deleteApp}>Cancel</button>}
             {props.doc && props.status =="unconfirmed" ? <button class="btn btn-primary flex-auto" onClick={confirmAppointment}>Confirm</button> : null}
             {props.doc && props.status =="confirmed" ? <button class="btn btn-success flex-auto" onClick={doctorCompleteAppointment} >Mark as complete</button> : null}
+            {
+            //TODO add a button to add a note to the appointment
+            //Use a modal just like the add appointment that the user had
+            props.doc && props.status !="complete" ? 
+            <button class="btn btn-secondary flex-auto hidden" onClick={doctorAddAppointmentNote} >Add Notes</button> 
+            : null}
           </div>
         </div>
       </div>
       <div id="UserActions" className='flex'>
         <div id="MutualDeleteAppointment">
-          {confirmDelete ? <AppointmentConfirmDelete _id={props._id} confirm={deleteConfirmed}/> : null}
+          {confirmDelete ? <AppointmentConfirmDelete _id={props._id} confirm={deleteConfirmed} /> : null}
         </div>
         <div id="DoctorConfirmAppointment">
           {confirmDocApp ? <AppointmentConfirm _id={props._id} confirm={confirmAppointment}/> : null}

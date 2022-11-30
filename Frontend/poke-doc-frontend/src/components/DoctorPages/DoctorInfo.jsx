@@ -1,6 +1,7 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
 import { getAppointments, getPatientById } from '../../doctorAPI'
+import DoctorAddNotes from '../Pages/UserActions/DoctorAddNotes'
 import Appointment from '../Pages/UserHome/Appointment'
 const DoctorInfo = (props) => {
   //PROPS user, appointments as apps
@@ -59,7 +60,6 @@ const DoctorInfo = (props) => {
       <div id='upcoming' className=''>
         <div className='text-btn-combo flex'>
           <div className='text-2xl'>here are your upcoming appointments with patients</div>
-          <a className='btn text-secondary ml-10' href="/dcreate_appointment">schedule</a>
         </div>
         <div className='upcoming-appointments flex'>
         {loading? <div>loading</div> : loadAppointments()}

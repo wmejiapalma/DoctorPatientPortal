@@ -136,12 +136,10 @@ const CreateAppointment = () => {
           <label>
             <span className="w-32 min-w-min">Notes for Doctor</span>
           </label>
-            <textarea id="notes" className="textarea h-24 textarea-bordered" onChange={setData}></textarea>
+            <textarea id="notes" className="textarea h-24 textarea-bordered max-h-screen" onChange={setData}></textarea>
           {/*SUBMIT BUTTON */}
           <div className="flex flex-col justify-center items-center">
             <div className='mt-2 btn btn-secondary' onClick={onFormSubmit}>Request Appointment</div>
-            <div className='divider'>OR</div>
-            <Link className='mt-2 btn btn-secondary' to="/userhome">Back Home</Link>
             {/* add a or and a back button that takes the user to the userhome page */}
 
           </div>

@@ -3,6 +3,7 @@ import Appointment from './Appointment'
 import AppointmentStats from './AppointmentStats'
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
+import CreateAppointment from '../UserActions/CreateAppointment'
 const UserInfo = (props) => {
   //useeffect for loading
   function loadIncompleteAppointments(){
@@ -38,13 +39,25 @@ const UserInfo = (props) => {
         <div id='upcoming' className=''>
           <div className='text-btn-combo flex'>
             <div className='text-2xl'>here are your upcoming appointments</div>
-            <Link className='btn text-secondary ml-10' to="/create_appointment" >schedule</Link>
           </div>
-          <div className='upcoming-appointments flex flex-none'>
+          <div className='upcoming-appointments flex flex-none '>
             {
               loadIncompleteAppointments()
             }
+            
+            {/* Code for requesting appointment button and pop up */}
+            <div className='tooltip tooltip-right self-center' data-tip="Request New Appointment">
+               <label htmlFor="request_appointment" className='btn btn-circle btn-ghost ml-20 h-16 w-16 text-xl bg-secondary'>+</label>
+            </div>
+            <input type="checkbox" id="request_appointment" className="modal-toggle" />
+            <label htmlFor="request_appointment" className="modal cursor-pointer">
+              <label htmlFor="request_appointment" className="btn btn-md btn-circle absolute right-2 top-2">✕</label>
+              <CreateAppointment />
+            </label>
           </div>
+
+
+
           <div id='CompletedAppointments'>
             <div className='text-btn-combo flex'>
               <div className='text-2xl flex-1'>here are your completed appointments</div>
