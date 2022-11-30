@@ -1,6 +1,7 @@
 import React from 'react'
 import CustomNav from '../Navbar/CustomNav'
 import PokeDocHero from '../../assets/PokeDocHero.png'
+import { Link } from 'react-router-dom'
 const home = () => {
 
 
@@ -13,9 +14,9 @@ const home = () => {
             <p className='py-6'>The easiest place to secure doctors appointments or look at those important notes</p>
             <div id="hero-actions" className="">
               <div id="hero-buttons" className='flex'>
-                <a className='btn btn-white btn-lg flex-1 text-sm' href="/sign_up">Sign up</a>
+                <Link className='btn btn-white btn-lg flex-1 text-sm' to="/sign_up">Sign up</Link>
                 <div className='divider divider-horizontal flex-1'>OR</div>
-                <a className='btn btn-white btn-lg flex-1 text-sm' href="/log_in">Login</a>
+                <Link className='btn btn-white btn-lg flex-1 text-sm' to="/log_in">Login</Link>
               </div>
             </div>
           </div>

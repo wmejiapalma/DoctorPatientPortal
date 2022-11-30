@@ -2,6 +2,7 @@ import React from 'react'
 import Appointment from './Appointment'
 import AppointmentStats from './AppointmentStats'
 import { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
 const UserInfo = (props) => {
   //useeffect for loading
   function loadIncompleteAppointments(){
@@ -37,7 +38,7 @@ const UserInfo = (props) => {
         <div id='upcoming' className=''>
           <div className='text-btn-combo flex'>
             <div className='text-2xl'>here are your upcoming appointments</div>
-            <a className='btn text-secondary ml-10' href="/create_appointment" >schedule</a>
+            <Link className='btn text-secondary ml-10' to="/create_appointment" >schedule</Link>
           </div>
           <div className='upcoming-appointments flex flex-none'>
             {
@@ -48,7 +49,9 @@ const UserInfo = (props) => {
             <div className='text-btn-combo flex'>
               <div className='text-2xl flex-1'>here are your completed appointments</div>
             </div>
+            <div className='flex'>
               {loadCompletedAppointments()}
+            </div>
           </div>
         </div>
         {

@@ -67,9 +67,9 @@ const getPersonTitle = ()=>{
         <figure><img src=""/></figure>
         <div class="card-body items-center">
           <h2 class="card-title">{props.type}</h2>
-          <p>{dayjs(props.date).format("DD/MM/YY hh:mm")}</p>
+          <p>{dayjs(props.date).format("DD/MM/YY hh:mm A")}</p>
           <p>{getPersonTitle()} {props.doctor_name}</p>
-          <p className={getStatusColor(props.status)}>{props.status}</p>
+          <p className={getStatusColor(props.status) + " capitalize"}>{props.status}</p>
           <div class="card-actions justify-end flex flex-row">
             {props.status =="complete"? null : <button class="btn btn-error flex-auto" onClick={deleteApp}>Cancel</button>}
             {props.doc && props.status =="unconfirmed" ? <button class="btn btn-primary flex-auto" onClick={confirmAppointment}>Confirm</button> : null}

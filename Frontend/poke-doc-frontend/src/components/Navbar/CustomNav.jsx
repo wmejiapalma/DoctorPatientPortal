@@ -6,7 +6,7 @@ import { currentUser as dcurrent } from '../../doctorAPI'
 import { currentUser as pcurrent } from '../../patientAPI'
 const CustomNav = (props) => {
   const unAuthLinks = ["Home", "Log in", "Sign up"]
-  const authLinks = ["Dashboard", "Home", "Log out"]
+  const authLinks = ["Dashboard", "Log out"]
   const [links, setLinks] = useState(unAuthLinks)
   function getLinks(){
     if(props.auth){
@@ -18,9 +18,9 @@ const CustomNav = (props) => {
   }
   return (
     <>
-<div className="navbar bg-secondary">
+<div className="navbar bg-gradient-to-b from-violet-500">
   <div className="flex-1">
-    <a className="btn btn-ghost normal-case text-xl" href="/">PokeDoc</a>
+    <a className="btn btn-ghost normal-case text-xl " href="/">PokeDoc</a>
   </div>
   <div className="flex flex-none">
     <ul className="menu menu-horizontal p-0">

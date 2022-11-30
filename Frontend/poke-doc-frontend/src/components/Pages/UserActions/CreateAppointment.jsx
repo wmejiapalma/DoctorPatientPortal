@@ -4,6 +4,7 @@ import { getDoctors } from '../../../doctorAPI'
 import CustomNav from '../../Navbar/CustomNav'
 import { createAppointment } from '../../../patientAPI'
 import dayjs from 'dayjs'
+import { Link } from 'react-router-dom'
 const CreateAppointment = () => {
     function setUseState(){
         return {
@@ -85,12 +86,10 @@ const CreateAppointment = () => {
       //set the date and time of the appointment
       let date = document.getElementById("date_of_appointment").value
       let time = document.getElementById("time").value
-      console.log(date,time)
       let dateTime = dayjs(date + " " + time)
-
       setAppointment(prevState => ({
-          ...prevState,
-          "date_of_appointment": dateTime.toJSON()
+        ...prevState,
+        "date_of_appointment": dateTime.toString()
       }))
     }
     return (
@@ -101,13 +100,13 @@ const CreateAppointment = () => {
             {/*DATE OF APPOINTMENT */}
             <label className="input-group my-2 flex">
               <span className="w-32 min-w-min">Date of Appointment</span>
-              <input id="date_of_appointment" placeholder='Date' required type="date" min={date} max="2024-01-01" className="input input-bordered flex-1" />
+              <input id="date_of_appointment" onChange={setDateTime} placeholder='Date' required type="date" min={date} max="2024-01-01" className="input input-bordered flex-1" />
             </label>
             {/*TIME OF APPOINTMENT */}
             <label>
               <span className="w-32 min-w-min">Time</span>
             </label>
-            <select id="time" className='select w-full max-w-xs'>
+            <select id="time" onChange={setDateTime} className='select w-full max-w-xs'>
             {
               getAppointmentTimes()
             }
@@ -139,8 +138,12 @@ const CreateAppointment = () => {
           </label>
             <textarea id="notes" className="textarea h-24 textarea-bordered" onChange={setData}></textarea>
           {/*SUBMIT BUTTON */}
-          <div className="flex justify-center">
+          <div className="flex flex-col justify-center items-center">
             <div className='mt-2 btn btn-secondary' onClick={onFormSubmit}>Request Appointment</div>
+            <div className='divider'>OR</div>
+            <Link className='mt-2 btn btn-secondary' to="/userhome">Back Home</Link>
+            {/* add a or and a back button that takes the user to the userhome page */}
+
           </div>
           </div>
         </div>

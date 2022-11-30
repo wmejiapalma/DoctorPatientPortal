@@ -77,5 +77,4 @@ const DoctorInfo = (props) => {
     </div>
 )
 }
-
 export default DoctorInfo

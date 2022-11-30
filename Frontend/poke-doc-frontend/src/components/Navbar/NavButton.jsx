@@ -2,6 +2,7 @@ import React from 'react'
 import httpClient from '../../httpClient'
 import { logout } from '../../patientAPI'
 import { logout as SecureLogOut } from '../../doctorAPI'
+import { Link } from 'react-router-dom'
 
 const NavButton = (props) => {
     function logOut(){
@@ -29,16 +30,18 @@ const NavButton = (props) => {
     function getButton(){
         
         if (props.name == "Log out"){
-            return <a onClick={completeLogout} class="btn btn-primary opacity-80 m-1 text-error">{props.name}</a>
+            return <Link onClick={completeLogout} class="btn btn-primary opacity-80 m-1 text-error">{props.name}</Link>
         }
         else if(props.name == "Home"){
             //TODO if user is logged in then redirect to user home
-            return <a class="btn btn-primary opacity-80 m-1 text-success" href={props.link}>{props.name}</a>
+            return <Link class="btn btn-primary opacity-80 m-1 text-success" to={props.link}>{props.name}</Link>
         }
         else if(props.name =="Dashboard"){
-            return <a class="btn btn-primary opacity-80 m-1 text-success" href="/userhome">{props.name}</a>
+            //TODO if user is logged in then redirect to user home
+            //TODO if user is doctor then redirect to doctor home
+            return <Link class="btn btn-primary opacity-80 m-1 text-success" to="/userhome">{props.name}</Link>
         }
-        return <a class="btn btn-primary opacity-80 m-1" href={props.link}>{props.name}</a>
+        return <Link class="btn btn-primary opacity-80 m-1" to={props.link}>{props.name}</Link>
     }    
     return (
         <div>

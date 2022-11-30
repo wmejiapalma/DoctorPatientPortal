@@ -2,6 +2,7 @@ import React from 'react'
 import CustomNav from '../Navbar/CustomNav'
 import {useState} from 'react'
 import { createUser } from '../../patientAPI'
+import { Link } from 'react-router-dom'
 const SignUp = () => {
 
   function setUseState(){
@@ -63,8 +64,8 @@ const SignUp = () => {
             <div className="DividerAndSignUp">
               <div className='divider'>OR</div>
               <div className='flex justify-center'>
-                <a className="m-3 btn btn-secondary" href='/log_in' >Login</a>
-                <a className="m-3 btn btn-secondary" href='/doctor_sign_up' >Employee Sign up</a>
+                <Link className="m-3 btn btn-secondary" to='/log_in' >Login</Link>
+                <Link className="m-3 btn btn-secondary" to='/doctor_sign_up' >Employee Sign up</Link>
               </div>
             </div>
         </div>
