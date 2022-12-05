@@ -5,6 +5,7 @@ import AppointmentComplete from './AppointmentComplete'
 import AppointmentConfirm from './AppointmentConfirm'
 import AppointmentConfirmDelete from './AppointmentConfirmDelete'
 import dayjs from 'dayjs'
+import DoctorAddNotes from '../UserActions/DoctorAddNotes'
 const Appointment = (props) => {
 {/*
   _id
@@ -66,6 +67,11 @@ const getPersonTitle = ()=>{
 }
   return (
     <>
+      {/*Div content for note modal */}
+      <input type="checkbox" id="doctor_notes" class="modal-toggle" />
+      <label for="doctor_notes" class="modal cursor-pointer">
+        <DoctorAddNotes/>
+      </label>
       <div class="card card-compact w-48 bg-violet-900 shadow-xl m-2 ">
         <figure><img src=""/></figure>
         <div class="card-body items-center">
@@ -81,7 +87,7 @@ const getPersonTitle = ()=>{
             //TODO add a button to add a note to the appointment
             //Use a modal just like the add appointment that the user had
             props.doc && props.status !="complete" ? 
-            <button class="btn btn-secondary flex-auto hidden" onClick={doctorAddAppointmentNote} >Add Notes</button> 
+            <label for="doctor_notes" class="btn btn-secondary flex-auto">Add Notes</label> 
             : null}
           </div>
         </div>
