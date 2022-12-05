@@ -78,7 +78,7 @@ const DoctorLogin = () => {
             <div className="DividerAndSignUp">
               <div className='divider'>OR</div>
               <div className='flex justify-center m-3 items-center'>
-                <a className="btn btn-secondary flex-1 mx-5" >Sign up</a>
+                <Link to="/doctor_sign_up" className="btn btn-secondary flex-1 mx-5" >Sign up</Link>
                 <Link to="/log_in" className="btn btn-secondary flex-1 mx-5" >Patient Login</Link>
               </div>
             </div>

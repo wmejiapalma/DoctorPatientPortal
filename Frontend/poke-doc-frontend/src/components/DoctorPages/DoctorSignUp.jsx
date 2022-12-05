@@ -2,6 +2,7 @@ import React from 'react'
 import { createUser } from '../../doctorAPI'
 import { useState } from 'react'
 import CustomNav from '../Navbar/CustomNav'
+import { Link } from 'react-router-dom'
 
 const DoctorSignUp = () => {
 
@@ -70,7 +71,7 @@ const DoctorSignUp = () => {
                 <div className="DividerAndSignUp">
                     <div className='divider'>OR</div>
                     <div className='flex justify-center'>
-                    <a className="m-3 btn btn-secondary" href='/log_in' >Login</a>
+                    <Link className="m-3 btn btn-secondary" to='/log_in' >Login</Link>
                     </div>
                 </div>
             </div>
