@@ -83,7 +83,7 @@ const Login = (props) => {
             </label>
             <label className="input-group my-2 flex">
               <span>Password</span>
-              <input id="password" required type="text" placeholder="gR3AtP4ss01$" className="flex-1 input input-bordered"  onChange={setData} />
+              <input id="password" required type="password" placeholder="gR3AtP4ss01$" className="flex-1 input input-bordered"  onChange={setData} />
             </label>
           <div className="flex justify-center">
             <div className='mt-2 btn btn-secondary' onClick={onFormSubmit}>Log in</div>

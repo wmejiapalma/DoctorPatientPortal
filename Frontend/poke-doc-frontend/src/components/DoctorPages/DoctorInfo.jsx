@@ -17,11 +17,12 @@ const DoctorInfo = (props) => {
         )
       });
       setLoading(false)
+      console.log(props.apps)
     }
   },[])
   function debugApp(app){
     return(
-      <Appointment date={app.date_of_appointment} type={app.appointment_type} doctor_name={props.user.firstname + " " + props.user.lastname} status={app.status} doc={true} _id={app._id}/>
+      <Appointment date={app.date_of_appointment} type={app.appointment_type} doctor_name={app.patient_name} status={app.status} doc={true} _id={app._id}/>
     )
   }
   function loadAppointments(){
@@ -61,7 +62,7 @@ const DoctorInfo = (props) => {
         <div className='text-btn-combo flex'>
           <div className='text-2xl'>here are your upcoming appointments with patients</div>
         </div>
-        <div className='upcoming-appointments flex'>
+        <div className='upcoming-appointments flex flex-none'>
         {loading? <div>loading</div> : loadAppointments()}
         </div>
       </div>

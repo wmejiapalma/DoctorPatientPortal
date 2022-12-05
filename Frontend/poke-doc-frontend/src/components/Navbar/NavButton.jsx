@@ -21,10 +21,10 @@ const NavButton = (props) => {
     }
     function completeLogout(){
         props.setAuth(false)
-        logOut().then(()=>{
-            doctorLogOut()
+        logout();
+        SecureLogOut().then(()=>{
+            window.location.href = "/"
         })
-
     }
 
     function getButton(){

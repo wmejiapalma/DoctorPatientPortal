@@ -32,6 +32,9 @@ const SignUp = () => {
       <>
       <div className="flex justify-center items-center my-4">
         <div id="LoginForm" className='card card-compact w-96 bg-primary shadow-xl my-8 '>
+          <div className="card-title justify-center my-3">
+              Patient Sign Up
+          </div>
           <div class="card-body justify-center ">
             <label className="flex input-group my-2">
               <span className="flex-1">First Name</span>
@@ -55,7 +58,7 @@ const SignUp = () => {
             </label>
             <label className="input-group my-2 flex">
               <span className="flex-1">Password</span>
-              <input id="password" required type="text" placeholder="gR3AtP4ss01$" className="flex-1 input input-bordered"  onChange={setData} />
+              <input id="password" required type="password" placeholder="gR3AtP4ss01$" className="flex-1 input input-bordered"  onChange={setData} />
             </label>
           <div className="flex justify-center">
             <div className='mt-2 btn btn-secondary' onClick={onFormSubmit}>Sign up</div>

@@ -1,6 +1,6 @@
 import httpClient from "./httpClient"
-const gatewayURL = "https://1665-172-83-4-34.ngrok.io"
-//const gatewayURL = "http://127.0.0.1:8888"
+//const gatewayURL = "https://1665-172-83-4-34.ngrok.io"
+const gatewayURL = "http://127.0.0.1:8888"
 const MICROSERVICE = "employeeservice"
 const URL = `${gatewayURL}/${MICROSERVICE}`
 // /login

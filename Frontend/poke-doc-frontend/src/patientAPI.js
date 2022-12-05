@@ -1,11 +1,14 @@
 import httpClient from "./httpClient"
-const gatewayURL = "https://1665-172-83-4-34.ngrok.io"
-//const gatewayURL = "http://127.0.0.1:8888"
+//const gatewayURL = "https://1665-172-83-4-34.ngrok.io"
+const gatewayURL = "http://127.0.0.1:8888"
 const MICROSERVICE = "patientservice"
 const URL = `${gatewayURL}/${MICROSERVICE}`
 //http;//apigateway:8888/patientservice
 const POSTHEADERS= {
     "Content-Type": "application/json"
+}
+export async function getPatientInformation(id){
+    return httpClient.get(`${URL}/patients/${id}`)
 }
 // /login
 export async function login(user){
